@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+	var app = angular.module('myApp', []);
+	app.controller('myCtrl', function($scope, $http) {
+		function hit() {
+			$http({
+				method : 'GET',
+				url : '/catch?user=' + $scope.name,
+				transformResponse : [ function(data) {
+					return data;
+				} ]
+			}).then(function(response) {
+				console.log(response);
+			}, function(error) {
+				console.log(error);
+			});
+		}
+		$scope.hit = hit;
+		return false;
+	});
+</script>
+<body ng-app="myApp">
+	<div ng-controller="myCtrl">
+		<form action="/catch" method="GET">
+			<input type="text" name="user" ng-model="name"
+				placeholder="Enter your name" /> <input type="button" value="GO"
+				ng-click="hit()" />
+		</form>
+	</div>
+</body>
+</html>
